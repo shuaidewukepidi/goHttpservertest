@@ -3,7 +3,8 @@ ENV  GOPROXY=https://goproxy.cn,direct
 WORKDIR /usr/local/docker/
 COPY  main.go  /usr/local/docker/
 RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -a -o httpserver /usr/local/docker/main.go
-#FROM scratch
-#COPY --from=builder /usr/local/docker/ usr/local/docker/
+
+FROM scratch
+COPY --from=builder /usr/local/docker/httpserver usr/local/docker/
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/docker/httpserver"]
